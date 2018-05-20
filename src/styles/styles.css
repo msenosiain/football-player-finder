@@ -1,0 +1,40 @@
+/* Styles */
+html, body {
+    height: 100%;
+}
+
+#root {
+    font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #4d4d4d;
+    min-width: 550px;
+    max-width: 850px;
+    margin: 0 auto;
+    height: 100%;
+}
+
+.title {
+    margin: 20px 0;
+}
+
+table.table thead {
+    border: 1px solid #4d4d4d;
+}
+
+table.table thead tr {
+    background-color: #686868;
+    color: whitesmoke;
+}
+
+table.table thead tr th {
+    text-align: center;
+    border: 1px solid #4d4d4d;
+}
+
+form.form-inline {
+    padding: 0 12px;
+    margin: 20px 0;
+}
+
+form.form-inline .form-group:not(:last-child) {
+    margin-right: 20px;
+}

@@ -1,0 +1,2 @@
+//Player
+export const LOAD_PLAYERS_SUCCESS = 'LOAD_PLAYERS_SUCCESS';
