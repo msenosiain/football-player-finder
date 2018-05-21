@@ -5,7 +5,6 @@ import * as playerActions from '../actions';
 import PlayersFilterForm from './PlayersFilterForm';
 import PlayersList from './PlayersList';
 import {getPositionsFormattedForDropdown} from '../selectors';
-import {getPlayersWithAge} from '../selectors';
 
 class PlayersPage extends React.Component {
 
@@ -64,7 +63,7 @@ class PlayersPage extends React.Component {
 
 function mapStateToProps(state, ownProps) {
     return {
-        players: getPlayersWithAge(state),
+        players: state.players,
         positions: getPositionsFormattedForDropdown(state),
         filters: {name: '', position: '', age: ''}
     };
