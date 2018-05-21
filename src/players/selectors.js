@@ -1,6 +1,23 @@
 import {createSelector} from 'reselect';
 
-const getPositions = () => {
+const getPlayers = (state) => state.players;
+
+const _calculateAge = (player) => {
+    let now = new Date();
+    let birthday = new Date(player.dateOfBirth);
+    let diff = now - birthday;
+    player.age = Math.floor(diff / 31557600000).toString();
+    return player;
+};
+
+export const getPlayersWithAge = createSelector(
+    getPlayers,
+    (players) => {
+        return players.map(_calculateAge)
+    } 
+);
+
+const _getPositions = () => {
     return [
         "Centre-Forward",
         "Keeper",
@@ -16,7 +33,7 @@ const getPositions = () => {
 };
 
 export const getPositionsFormattedForDropdown = createSelector(
-    getPositions, (positions) => positions.map(position => {
+    _getPositions, (positions) => positions.map(position => {
         return {
             value: position,
             text: position

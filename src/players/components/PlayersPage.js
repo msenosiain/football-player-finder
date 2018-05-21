@@ -5,7 +5,8 @@ import {bindActionCreators} from 'redux';
 import * as playerActions from '../actions';
 import PlayersFilterForm from './PlayersFilterForm';
 import PlayersList from './PlayersList';
-import {getPositionsFormattedForDropdown} from "../selectors";
+import {getPositionsFormattedForDropdown} from '../selectors';
+import {getPlayersWithAge} from '../selectors';
 
 class PlayersPage extends React.Component {
 
@@ -46,14 +47,14 @@ class PlayersPage extends React.Component {
     }
 
     render() {
-        const {players, positions} = this.props;
+        const {players, positions, filters} = this.props;
         return (
             <div>
                 <PlayersFilterForm
                     allPositions={positions}
                     onChange={this.updateFiltersState}
                     onFilter={this.filterPlayers}
-                    filters={this.state.filters}/>
+                    filters={filters}/>
 
                 <PlayersList players={players}/>
             </div>
@@ -68,8 +69,9 @@ PlayersPage.propTypes = {
 
 function mapStateToProps(state, ownProps) {
     return {
-        filters: {name: '', position: '', age: ''},
-        positions: getPositionsFormattedForDropdown(state)
+        players: getPlayersWithAge(state),
+        positions: getPositionsFormattedForDropdown(state),
+        filters: {name: '', position: '', age: ''}
     };
 }
 

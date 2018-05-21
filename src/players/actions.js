@@ -13,18 +13,7 @@ export function loadPlayers() {
     return function (dispatch) {
         dispatch(beginAjaxCall());
         return PlayerApi.getAllPlayers().then(response => {
-
-            const _calculatePlayerAge = (player) => {
-                let now = new Date();
-                let birthday = new Date(player.dateOfBirth);
-                let diff = now - birthday;
-                player.age = Math.floor(diff / 31557600000).toString();
-                return player;
-            };
-
-            let players = response.data.map(_calculatePlayerAge);
-
-            dispatch(loadPlayersSuccess(players));
+            dispatch(loadPlayersSuccess(response.data));
         }).catch(error => {
             dispatch(ajaxCallError(error));
             throw(error);
@@ -43,11 +32,9 @@ export function filterPlayers(filters) {
             return !!prop;
         });
         if (_.isEmpty(filter)) {
-            debugger;
             dispatch(loadPlayers());
         } else {
             let filteredPlayers = _.filter(state.players, filter);
-            debugger;
             dispatch(filterPlayersSuccess(filteredPlayers));
         }
 
