@@ -21,15 +21,28 @@ export function loadPlayers(filters) {
     return function (dispatch) {
         dispatch(beginAjaxCall());
         return PlayerApi.getAllPlayers().then(response => {
-            const filter = _.pickBy(filters, prop => {
+            const criteria = _.pickBy(filters, prop => {
                 return !!prop;
             });
             let players = response.data.map(_calculateAge);
 
-            if (_.isEmpty(filter)) {
+            if (_.isEmpty(criteria)) {
                 dispatch(loadPlayersSuccess(players));
             } else {
-                dispatch(loadPlayersSuccess(_.filter(players, filter)));
+                dispatch(loadPlayersSuccess(_.filter(players, player => {
+                    let ret = [];
+                    _.each(criteria, (value, key) => {
+                        if (key === 'name') {
+                            ret.push(player[key].indexOf(value) > -1);
+                        } else {
+                            ret.push(player[key] === value);
+                        }
+                    });
+
+                    return ret.every(val => {
+                        return val
+                    });
+                })));
             }
         }).catch(error => {
             dispatch(ajaxCallError(error));

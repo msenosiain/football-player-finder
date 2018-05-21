@@ -5,7 +5,7 @@ import SelectInput from "../../common/components/SelectInput";
 const PlayersFilterForm = ({filters, allPositions, onFilter, onChange}) => {
 
     function alphaOnly(e) {
-        const re = /[a-zA-Z]+/g;
+        const re = /[A-Za-zÀ-ÿ ]+/g;
         if (!re.test(e.key)) {
             e.preventDefault();
         }
