@@ -1,11 +1,25 @@
-import _ from 'lodash';
 import {createSelector} from 'reselect';
 
-const getPlayers = (state) => state.players;
+const getPositions = () => {
+    return [
+        "Centre-Forward",
+        "Keeper",
+        "Centre-Back",
+        "Left-Back",
+        "Right-Back",
+        "Defensive Midfield",
+        "Central Midfield",
+        "Left Midfield",
+        "Attacking Midfield",
+        "Left Wing"
+    ]
+};
 
 export const getPositionsFormattedForDropdown = createSelector(
-    getPlayers,
-    (players) => _.map(_.uniq(_.map(players, 'position')), position => {
-        return {}
+    getPositions, (positions) => positions.map(position => {
+        return {
+            value: position,
+            text: position
+        }
     })
 );

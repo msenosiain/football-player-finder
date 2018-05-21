@@ -5,7 +5,8 @@ export default function playerReducer(state = initialState.players, action) {
     switch (action.type) {
         case types.LOAD_PLAYERS_SUCCESS:
             return action.players;
-
+        case types.FILTER_PLAYERS_SUCCESS:
+            return action.players;
         default:
             return state;
     }

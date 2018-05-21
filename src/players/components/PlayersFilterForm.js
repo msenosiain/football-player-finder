@@ -38,9 +38,11 @@ const PlayersFilterForm = ({filters, allPositions, onFilter, onChange}) => {
                     placeholder="Age"
                     onChange={onChange}/>
 
-                <div className="form-group pull-right">
-                    <input type="submit" className="btn btn-primary" value="Search"/>
-                </div>
+                <input
+                    type="submit"
+                    className="btn btn-primary pull-right"
+                    value="Search"
+                onClick={onFilter}/>
             </form>
         </div>
     );
