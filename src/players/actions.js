@@ -7,7 +7,7 @@ const _calculateAge = (player) => {
     let now = new Date();
     let birthday = new Date(player.dateOfBirth);
     let diff = now - birthday;
-    player.age = Math.floor(diff / 31557600000).toString();
+    player.age = Math.floor(diff / 31557600000).toString(); // Biutiful!! :P
     return player;
 };
 
@@ -33,7 +33,7 @@ export function loadPlayers(filters) {
                     let ret = [];
                     _.each(criteria, (value, key) => {
                         if (key === 'name') {
-                            ret.push(player[key].indexOf(value) > -1);
+                            ret.push(player[key].toLowerCase().indexOf(value.toLowerCase()) > -1);
                         } else {
                             ret.push(player[key] === value);
                         }
