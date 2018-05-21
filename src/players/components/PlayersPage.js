@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as playerActions from '../actions';
@@ -47,14 +46,14 @@ class PlayersPage extends React.Component {
     }
 
     render() {
-        const {players, positions, filters} = this.props;
+        const {players, positions} = this.props;
         return (
             <div>
                 <PlayersFilterForm
                     allPositions={positions}
                     onChange={this.updateFiltersState}
                     onFilter={this.filterPlayers}
-                    filters={filters}/>
+                    filters={this.state.filters}/>
 
                 <PlayersList players={players}/>
             </div>
@@ -62,10 +61,6 @@ class PlayersPage extends React.Component {
         );
     }
 }
-
-PlayersPage.propTypes = {
-    players: PropTypes.array.isRequired
-};
 
 function mapStateToProps(state, ownProps) {
     return {

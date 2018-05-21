@@ -14,7 +14,7 @@ export const getPlayersWithAge = createSelector(
     getPlayers,
     (players) => {
         return players.map(_calculateAge)
-    } 
+    }
 );
 
 const _getPositions = () => {

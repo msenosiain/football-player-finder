@@ -31,7 +31,7 @@ export function filterPlayers(filters) {
         const filter = _.pickBy(filters, prop => {
             return !!prop;
         });
-        if (_.isEmpty(filter)) {
+        if (_.isEmpty(state.players) || _.isEmpty(filter)) {
             dispatch(loadPlayers());
         } else {
             let filteredPlayers = _.filter(state.players, filter);

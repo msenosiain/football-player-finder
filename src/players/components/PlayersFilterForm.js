@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import TextInput from '../../common/components/TextInput';
 import SelectInput from "../../common/components/SelectInput";
 
