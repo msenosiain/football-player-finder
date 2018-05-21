@@ -17,34 +17,23 @@ export function loadPlayersSuccess(players) {
     return {type: types.LOAD_PLAYERS_SUCCESS, players};
 }
 
-export function loadPlayers() {
+export function loadPlayers(filters) {
     return function (dispatch) {
         dispatch(beginAjaxCall());
         return PlayerApi.getAllPlayers().then(response => {
-            dispatch(loadPlayersSuccess(response.data.map(_calculateAge)));
+            const filter = _.pickBy(filters, prop => {
+                return !!prop;
+            });
+            let players = response.data.map(_calculateAge);
+
+            if (_.isEmpty(filter)) {
+                dispatch(loadPlayersSuccess(players));
+            } else {
+                dispatch(loadPlayersSuccess(_.filter(players, filter)));
+            }
         }).catch(error => {
             dispatch(ajaxCallError(error));
             throw(error);
         });
-    };
-}
-
-export function filterPlayersSuccess(filteredPlayers) {
-    return {type: types.FILTER_PLAYERS_SUCCESS, filteredPlayers}
-}
-
-export function filterPlayers(filters) {
-    return function (dispatch, getState) {
-        const state = getState();
-        const filter = _.pickBy(filters, prop => {
-            return !!prop;
-        });
-        if (_.isEmpty(state.players) || _.isEmpty(filter)) {
-            dispatch(loadPlayers());
-        } else {
-            let filteredPlayers = _.filter(state.players, filter);
-            dispatch(filterPlayersSuccess(filteredPlayers));
-        }
-
     };
 }

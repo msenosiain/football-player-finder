@@ -41,7 +41,7 @@ class PlayersPage extends React.Component {
 
     filterPlayers(event) {
         event.preventDefault();
-        this.props.actions.filterPlayers(this.state.filters);
+        this.props.actions.loadPlayers(this.state.filters);
     }
 
     render() {
