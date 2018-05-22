@@ -6,7 +6,7 @@ import PlayersFilterForm from './PlayersFilterForm';
 import PlayersList from './PlayersList';
 import {getPositionsFormattedForDropdown} from '../selectors';
 
-class PlayersPage extends React.Component {
+export class PlayersPage extends React.Component {
 
     constructor(props, context) {
         super(props, context);

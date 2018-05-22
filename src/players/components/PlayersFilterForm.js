@@ -38,9 +38,10 @@ const PlayersFilterForm = ({filters, allPositions, onFilter, onChange}) => {
                     onChange={onChange}/>
 
                 <input
+                    title="Click (or press ⏎) to search"
                     type="submit"
                     className="btn btn-primary pull-right"
-                    value="Search"
+                    value="Search ⏎"
                 onClick={onFilter}/>
             </form>
         </div>

@@ -1,6 +1,5 @@
 import * as types from './actionTypes';
 import PlayerApi from '../api/PlayerApi';
-import {beginAjaxCall, ajaxCallError} from "../common/ajaxStatusActions";
 import _ from 'lodash';
 
 const _calculateAge = (player) => {
@@ -12,14 +11,12 @@ const _calculateAge = (player) => {
 };
 
 // Player Actions
-
 export function loadPlayersSuccess(players) {
     return {type: types.LOAD_PLAYERS_SUCCESS, players};
 }
 
 export function loadPlayers(filters) {
     return function (dispatch) {
-        dispatch(beginAjaxCall());
         return PlayerApi.getAllPlayers().then(response => {
             const criteria = _.pickBy(filters, prop => {
                 return !!prop;
@@ -45,7 +42,6 @@ export function loadPlayers(filters) {
                 })));
             }
         }).catch(error => {
-            dispatch(ajaxCallError(error));
             throw(error);
         });
     };
