@@ -1,6 +1,7 @@
 import React from 'react';
 import {mount, shallow} from 'enzyme';
 import {PlayersPage} from './PlayersPage';
+import _ from 'lodash';
 
 const players = [
     {
@@ -10,14 +11,16 @@ const players = [
         "name": "Romelu Lukaku",
         "nationality": "Belgium",
         "position": "Centre-Forward"
-    }, {
+    },
+    {
         "contractUntil": "2019-06-30",
         "dateOfBirth": "1990-11-07",
         "jerseyNumber": 1,
         "name": "David de Gea",
         "nationality": "Spain",
         "position": "Keeper"
-    }, {
+    },
+    {
         "contractUntil": "2021-06-30",
         "dateOfBirth": "1987-02-22",
         "jerseyNumber": 20,
@@ -28,6 +31,23 @@ const players = [
 ];
 
 describe('Players Page', () => {
+
+    function setup(players) {
+        const props = {
+            players: players,
+            positions: [],
+            filters: {name: '', position: '', age: ''},
+            actions: {
+                loadPlayers: () => {
+                    return Promise.resolve(players);
+                }
+            }
+
+        };
+        return mount(<PlayersPage {...props}/>)
+    }
+
+
     it('should be true', function () {
         expect(true).toBe(true);
     });
@@ -36,21 +56,25 @@ describe('Players Page', () => {
         shallow(<PlayersPage/>);
     });
 
-    it('renders players when searched', () => {
-        const props = {
-            players: players,
-            actions: {
-                loadPlayers: () => {
-                    return Promise.resolve(players);
-                }
-            },
-            filters: {name: 'Ro', position: '', age: ''}
-        };
-        const wrapper = mount(<PlayersPage {...props}/>);
+    it('renders has submit button', () => {
+        const wrapper = setup(players);
         const searchButton = wrapper.find('.btn');
-        expect(searchButton.prop('type').toBe('submit'));
-        searchButton.simulate('click');
-        expect(wrapper).find()
+        expect(searchButton.prop('type')).toBe('submit');
     });
 
+    it('renders players rows', () => {
+        const wrapper = setup(players);
+        const searchButton = wrapper.find('.btn');
+        searchButton.simulate('click');
+        expect(wrapper.find('tbody tr').length).toBe(3);
+    });
+
+    it('renders players rows filtered', () => {
+        const wrapper = setup(_.filter(players, (player) => {
+            return player.name.toLowerCase().indexOf('ro') > -1;
+        }));
+        const searchButton = wrapper.find('.btn');
+        searchButton.simulate('click');
+        expect(wrapper.find('tbody tr').length).toBe(2);
+    });
 });
