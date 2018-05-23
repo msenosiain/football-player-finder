@@ -3,8 +3,9 @@ import {mount, shallow} from 'enzyme';
 import {PlayersPage} from './PlayersPage';
 import _ from 'lodash';
 
-const players = [
+const mockPlayers = [
     {
+        "age": "25",
         "contractUntil": "2022-06-30",
         "dateOfBirth": "1993-05-13",
         "jerseyNumber": 9,
@@ -13,6 +14,7 @@ const players = [
         "position": "Centre-Forward"
     },
     {
+        "age": "27",
         "contractUntil": "2019-06-30",
         "dateOfBirth": "1990-11-07",
         "jerseyNumber": 1,
@@ -21,6 +23,7 @@ const players = [
         "position": "Keeper"
     },
     {
+        "age": "31",
         "contractUntil": "2021-06-30",
         "dateOfBirth": "1987-02-22",
         "jerseyNumber": 20,
@@ -36,6 +39,7 @@ describe('Players Page', () => {
         const props = {
             players: players,
             positions: [],
+            allPositions: [],
             filters: {name: '', position: '', age: ''},
             actions: {
                 loadPlayers: () => {
@@ -47,34 +51,51 @@ describe('Players Page', () => {
         return mount(<PlayersPage {...props}/>)
     }
 
-
-    it('should be true', function () {
-        expect(true).toBe(true);
-    });
-
     it('renders without crashing', () => {
         shallow(<PlayersPage/>);
     });
 
-    it('renders has submit button', () => {
-        const wrapper = setup(players);
-        const searchButton = wrapper.find('.btn');
-        expect(searchButton.prop('type')).toBe('submit');
-    });
-
     it('renders players rows', () => {
-        const wrapper = setup(players);
+        const wrapper = setup(mockPlayers);
         const searchButton = wrapper.find('.btn');
         searchButton.simulate('click');
         expect(wrapper.find('tbody tr').length).toBe(3);
     });
 
-    it('renders players rows filtered', () => {
-        const wrapper = setup(_.filter(players, (player) => {
+    it('renders players rows filtered by name', () => {
+        const wrapper = setup(_.filter(mockPlayers, (player) => {
             return player.name.toLowerCase().indexOf('ro') > -1;
         }));
         const searchButton = wrapper.find('.btn');
         searchButton.simulate('click');
         expect(wrapper.find('tbody tr').length).toBe(2);
+    });
+
+    it('renders players rows filtered by age', () => {
+        const wrapper = setup(_.filter(mockPlayers, {'age': '31'}));
+        const searchButton = wrapper.find('.btn');
+        searchButton.simulate('click');
+        expect(wrapper.find('tbody tr').length).toBe(1);
+    });
+
+    it('age must be two chars only', () => {
+        const wrapper = setup(mockPlayers);
+        const mockedEvent = {target: {name: 'age', value: '212'}};
+        wrapper.instance().updateFiltersState(mockedEvent);
+        expect(wrapper.state().filters.age).toBe('');
+    });
+
+    it('age must be greater than 18', () => {
+        const wrapper = setup(mockPlayers);
+        const mockedEvent = {target: {name: 'age', value: '17'}};
+        wrapper.instance().updateFiltersState(mockedEvent);
+        expect(wrapper.state().filters.age).toBe('');
+    });
+
+    it('age must be lower than 40', () => {
+        const wrapper = setup(mockPlayers);
+        const mockedEvent = {target: {name: 'age', value: '41'}};
+        wrapper.instance().updateFiltersState(mockedEvent);
+        expect(wrapper.state().filters.age).toBe('');
     });
 });

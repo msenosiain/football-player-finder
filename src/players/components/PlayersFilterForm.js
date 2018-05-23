@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import TextInput from '../../common/components/TextInput';
 import SelectInput from "../../common/components/SelectInput";
 
@@ -42,14 +43,17 @@ const PlayersFilterForm = ({filters, allPositions, onFilter, onChange}) => {
                     type="submit"
                     className="btn btn-primary pull-right"
                     value="Search ⏎"
-                onClick={onFilter}/>
+                    onClick={onFilter}/>
             </form>
         </div>
     );
 };
 
 PlayersFilterForm.propTypes = {
-    // TODO: Add prop types validations here
+    filters: PropTypes.object.isRequired,
+    allPositions: PropTypes.array.isRequired,
+    onFilter: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired
 };
 
 export default PlayersFilterForm;

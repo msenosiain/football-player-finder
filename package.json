@@ -11,6 +11,7 @@
     "jest-enzyme": "^6.0.0",
     "jquery": "^3.3.1",
     "lodash": "^4.17.10",
+    "nock": "^9.2.6",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
@@ -18,6 +19,7 @@
     "react-scripts": "1.1.4",
     "react-test-renderer": "^16.3.2",
     "redux": "^4.0.0",
+    "redux-mock-store": "^1.5.1",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1"
   },
